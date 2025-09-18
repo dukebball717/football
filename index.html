@@ -1,100 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Football Game Scorer</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    button { margin: 5px; padding: 10px 20px; font-size: 16px; }
-    .scores { margin-top: 20px; }
-    #clock { font-size: 24px; margin: 10px 0; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Scorer</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  button { margin: 5px; padding: 10px 20px; font-size: 16px; }
+  .scores { margin-top: 20px; }
+  #clock { font-size: 24px; margin: 10px 0; }
+  #teams img { height: 50px; margin: 0 10px; vertical-align: middle; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+  th { background-color: #f2f2f2; }
+</style>
 </head>
 <body>
 
-  <h2>Football Game Scorer</h2>
+<h2>Football Game Scorer</h2>
 
-  <div id="clock">15:00</div>
-  <button onclick="advanceClock(1)">+1 sec</button>
-  <button onclick="advanceClock(10)">+10 sec</button>
-  <button onclick="advanceClock(-1)">-1 sec</button>
-  <button onclick="advanceClock(-10)">-10 sec</button><br><br>
+<label>Select Game: </label>
+<select id="gameSelect">
+  <option value="" disabled selected>Choose a game</option>
+  <option value="bills-dolphins" data-home="BUF" data-away="MIA">Bills vs Dolphins</option>
+  <option value="cowboys-giants" data-home="DAL" data-away="NYG">Cowboys vs Giants</option>
+  <!-- Add new games every Wednesday -->
+</select>
 
-  <p>Current Window Owner: <span id="currentPlayer">Russell</span></p>
+<div id="teams" style="margin-top:10px;"></div>
 
-  <button onclick="score('FG')">Field Goal ($1)</button>
-  <button onclick="score('TD')">Touchdown ($4)</button>
-  <button onclick="score('Safety')">Safety ($5)</button>
-  <button onclick="score('STTD')">Special Teams TD ($7)</button>
-  <button onclick="score('DefTD')">Defensive TD ($7)</button>
+<div style="margin-top:20px;">
+  <label>Quarter: </label>
+  <input type="number" id="quarter" min="1" max="4" value="1"><br><br>
 
-  <div class="scores">
-    <h3>Scores</h3>
-    <p id="scoreR">Russell: $0</p>
-    <p id="scoreD">Daniel: $0</p>
-    <p id="scoreZ">Zach: $0</p>
-  </div>
+  <label>Minute: </label>
+  <input type="number" id="minute" min="0" max="14" value="14">
+  <label>Second: </label>
+  <input type="number" id="second" min="0" max="59" value="0"><br><br>
 
-  <script>
-    let scores = {Russell:0, Daniel:0, Zach:0};
-    let quarter = 1;
-    let minutes = 15;
-    let seconds = 0;
+  <label>Assign Window to Player: </label>
+  <select id="manualPlayer">
+    <option value="Russell">Russell</option>
+    <option value="Daniel">Daniel</option>
+    <option value="Zach">Zach</option>
+  </select>
+</div>
 
-    // scoring values
-    const values = {FG:1, TD:4, Safety:5, STTD:7, DefTD:7};
+<p>Current Window Owner: <span id="currentPlayer">Russell</span></p>
 
-    // rotation order per quarter
-    const rotations = {
-      1: ['Russell','Daniel','Zach'],
-      2: ['Daniel','Zach','Russell'],
-      3: ['Zach','Russell','Daniel'],
-      4: ['Russell','Daniel','Zach']
-    };
+<button onclick="score('FG')">Field Goal ($1)</button>
+<button onclick="score('TD')">Touchdown ($4)</button>
+<button onclick="score('Safety')">Safety ($5)</button>
+<button onclick="score('STTD')">Special Teams TD ($7)</button>
+<button onclick="score('DefTD')">Defensive TD ($7)</button>
+<button onclick="undoScore()">Undo Last Score</button>
 
-    // update the clock display
-    function updateClock() {
-      let min = minutes;
-      let sec = seconds < 10 ? '0'+seconds : seconds;
-      document.getElementById('clock').innerText = `${min}:${sec}`;
-      document.getElementById('currentPlayer').innerText = getPlayer();
-    }
+<div class="scores">
+  <h3>Scores</h3>
+  <p id="scoreR">Russell: $0</p>
+  <p id="scoreD">Daniel: $0</p>
+  <p id="scoreZ">Zach: $0</p>
+</div>
 
-    // determine player based on current second in minute
-    function getPlayer() {
-      let secInMin = seconds;
-      if(secInMin <= 20) return rotations[quarter][0];
-      else if(secInMin <= 39) return rotations[quarter][1];
-      else return rotations[quarter][2];
-    }
+<h3>Scoring History</h3>
+<table id="historyTable">
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Quarter</th>
+      <th>Time</th>
+      <th>Score Type</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
-    // advance or rewind clock
-    function advanceClock(delta) {
-      let totalSec = minutes*60 + seconds + delta;
-      if(totalSec < 0) totalSec = 0;
-      minutes = Math.floor(totalSec/60);
-      seconds = totalSec % 60;
-      updateClock();
-    }
+<script>
+let scores = {Russell:0, Daniel:0, Zach:0};
+let quarter = 1;
+let minutes = 14;
+let seconds = 0;
+let history = []; // store scoring history
 
-    // score a play
-    function score(type) {
-      let player = getPlayer();
-      scores[player] += values[type];
-      document.getElementById('scoreR').innerText = `Russell: $${scores.Russell}`;
-      document.getElementById('scoreD').innerText = `Daniel: $${scores.Daniel}`;
-      document.getElementById('scoreZ').innerText = `Zach: $${scores.Zach}`;
-    }
+const values = {FG:1, TD:4, Safety:5, STTD:7, DefTD:7};
 
-    // allow changing quarter
-    document.getElementById('quarter').addEventListener('change', function() {
-      quarter = parseInt(this.value);
-      updateClock();
-    });
+function updateClock() {
+  document.getElementById('currentPlayer').innerText = getPlayer();
+}
 
-    updateClock();
-  </script>
+function getPlayer() {
+  return document.getElementById('manualPlayer').value;
+}
+
+function score(type) {
+  const player = getPlayer();
+  const amount = values[type];
+  scores[player] += amount;
+
+  // Add to history
+  const entry = {
+    player,
+    quarter,
+    time: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
+    type,
+    amount
+  };
+  history.push(entry);
+  updateScores();
+  updateHistory();
+}
+
+function undoScore() {
+  if(history.length === 0) return;
+  const last = history.pop();
+  scores[last.player] -= last.amount;
+  updateScores();
+  updateHistory();
+}
+
+function updateScores() {
+  document.getElementById('scoreR').innerText = `Russell: $${scores.Russell}`;
+  document.getElementById('scoreD').innerText = `Daniel: $${scores.Daniel}`;
+  document.getElementById('scoreZ').innerText = `Zach: $${scores.Zach}`;
+}
+
+function updateHistory() {
+  const tbody = document.querySelector('#historyTable tbody');
+  tbody.innerHTML = '';
+  history.forEach(h => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${h.player}</td><td>${h.quarter}</td><td>${h.time}</td><td>${h.type}</td><td>$${h.amount}</td>`;
+    tbody.appendChild(row);
+  });
+}
+
+// Event listeners
+document.getElementById('quarter').addEventListener('change', () => {
+  quarter = parseInt(document.getElementById('quarter').value);
+  updateClock();
+});
+document.getElementById('minute').addEventListener('change', () => {
+  minutes = parseInt(document.getElementById('minute').value);
+  updateClock();
+});
+document.getElementById('second').addEventListener('change', () => {
+  seconds = parseInt(document.getElementById('second').value);
+  updateClock();
+});
+
+// Game selection and logos
+document.getElementById('gameSelect').addEventListener('change', function() {
+  const selected = this.selectedOptions[0];
+  const home = selected.getAttribute('data-home');
+  const away = selected.getAttribute('data-away');
+  const container = document.getElementById('teams');
+  container.innerHTML = `
+    <img src="https://a.espncdn.com/i/teamlogos/nfl/500/${home}.png" alt="${home}">
+    <strong>${selected.text}</strong>
+    <img src="https://a.espncdn.com/i/teamlogos/nfl/500/${away}.png" alt="${away}">
+  `;
+});
+
+updateClock();
+</script>
 
 </body>
 </html>
