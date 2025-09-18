@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Game Scorer</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { margin: 5px; padding: 10px 20px; font-size: 16px; }
+    .scores { margin-top: 20px; }
+    #clock { font-size: 24px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+  <h2>Football Game Scorer</h2>
+
+  <div id="clock">15:00</div>
+  <button onclick="advanceClock(1)">+1 sec</button>
+  <button onclick="advanceClock(10)">+10 sec</button>
+  <button onclick="advanceClock(-1)">-1 sec</button>
+  <button onclick="advanceClock(-10)">-10 sec</button><br><br>
+
+  <p>Current Window Owner: <span id="currentPlayer">Russell</span></p>
+
+  <button onclick="score('FG')">Field Goal ($1)</button>
+  <button onclick="score('TD')">Touchdown ($4)</button>
+  <button onclick="score('Safety')">Safety ($5)</button>
+  <button onclick="score('STTD')">Special Teams TD ($7)</button>
+  <button onclick="score('DefTD')">Defensive TD ($7)</button>
+
+  <div class="scores">
+    <h3>Scores</h3>
+    <p id="scoreR">Russell: $0</p>
+    <p id="scoreD">Daniel: $0</p>
+    <p id="scoreZ">Zach: $0</p>
+  </div>
+
+  <script>
+    let scores = {Russell:0, Daniel:0, Zach:0};
+    let quarter = 1;
+    let minutes = 15;
+    let seconds = 0;
+
+    // scoring values
+    const values = {FG:1, TD:4, Safety:5, STTD:7, DefTD:7};
+
+    // rotation order per quarter
+    const rotations = {
+      1: ['Russell','Daniel','Zach'],
+      2: ['Daniel','Zach','Russell'],
+      3: ['Zach','Russell','Daniel'],
+      4: ['Russell','Daniel','Zach']
+    };
+
+    // update the clock display
+    function updateClock() {
+      let min = minutes;
+      let sec = seconds < 10 ? '0'+seconds : seconds;
+      document.getElementById('clock').innerText = `${min}:${sec}`;
+      document.getElementById('currentPlayer').innerText = getPlayer();
+    }
+
+    // determine player based on current second in minute
+    function getPlayer() {
+      let secInMin = seconds;
+      if(secInMin <= 20) return rotations[quarter][0];
+      else if(secInMin <= 39) return rotations[quarter][1];
+      else return rotations[quarter][2];
+    }
+
+    // advance or rewind clock
+    function advanceClock(delta) {
+      let totalSec = minutes*60 + seconds + delta;
+      if(totalSec < 0) totalSec = 0;
+      minutes = Math.floor(totalSec/60);
+      seconds = totalSec % 60;
+      updateClock();
+    }
+
+    // score a play
+    function score(type) {
+      let player = getPlayer();
+      scores[player] += values[type];
+      document.getElementById('scoreR').innerText = `Russell: $${scores.Russell}`;
+      document.getElementById('scoreD').innerText = `Daniel: $${scores.Daniel}`;
+      document.getElementById('scoreZ').innerText = `Zach: $${scores.Zach}`;
+    }
+
+    // allow changing quarter
+    document.getElementById('quarter').addEventListener('change', function() {
+      quarter = parseInt(this.value);
+      updateClock();
+    });
+
+    updateClock();
+  </script>
+
+</body>
+</html>
