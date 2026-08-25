@@ -21,10 +21,34 @@
       display: flex;
       flex-direction: column;
       padding: 0.8vh 0.8vw;
+      position: relative;
+    }
+
+    /* SUBTLE ROTATING CHECKERED BACKGROUND WATERMARK */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140vw;
+      height: 140vh;
+      margin-top: -70vh;
+      margin-left: -70vw;
+      background: repeating-conic-gradient(rgba(255, 255, 255, 0.02) 0% 25%, transparent 0% 50%) 50% / 80px 80px;
+      animation: rotateWatermark 120s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes rotateWatermark {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* HEADER */
     header {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -43,6 +67,34 @@
       align-items: center;
       justify-content: flex-start;
       height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* NASCAR LOGO LIGHT SWEEP */
+    .header-left::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -150%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%
+      );
+      transform: rotate(20deg);
+      animation: logoShimmer 6s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes logoShimmer {
+      0%, 75% { left: -150%; }
+      100% { left: 200%; }
     }
 
     .nascar-logo-svg {
@@ -67,10 +119,32 @@
       text-shadow: 2px 2px 6px #000;
       line-height: 1;
       text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 0.5vw;
+    }
+
+    /* GENTLE MOVING CHECKERED FLAGS */
+    .animated-flag {
+      display: inline-block;
+      animation: flagWiggle 3.5s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    .animated-flag.right {
+      animation-delay: 1.75s;
+    }
+
+    @keyframes flagWiggle {
+      0% { transform: rotate(-8deg) translateY(0); }
+      50% { transform: rotate(0deg) translateY(-2px); }
+      100% { transform: rotate(8deg) translateY(0); }
     }
 
     /* GRID LAYOUT (5 Columns x 2 Rows) */
     .grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(2, 1fr);
@@ -79,7 +153,7 @@
       width: 100%;
     }
 
-    /* CARD STYLING */
+    /* CARD STYLING WITH SUBTLE GOLD PULSE */
     .card {
       background: #0f1115;
       border: 2px solid #ffb703;
@@ -87,7 +161,24 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+      animation: goldPulse 4s ease-in-out infinite;
+    }
+
+    /* Staggered pulse timing across cards */
+    .card:nth-child(2n) { animation-delay: 0.8s; }
+    .card:nth-child(3n) { animation-delay: 1.6s; }
+    .card:nth-child(4n) { animation-delay: 2.4s; }
+    .card:nth-child(5n) { animation-delay: 3.2s; }
+
+    @keyframes goldPulse {
+      0%, 100% {
+        border-color: #ffb703;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.7), 0 0 4px rgba(255, 183, 3, 0.15);
+      }
+      50% {
+        border-color: #ffd000;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.8), 0 0 12px rgba(255, 183, 3, 0.45);
+      }
     }
 
     /* PARTICIPANT HEADERS */
@@ -133,7 +224,7 @@
       gap: 0.5vh;
     }
 
-    /* CLEAN DRIVER ROW LAYOUT */
+    /* CLEAN & STATIC DRIVER ROW LAYOUT */
     .driver-row {
       display: flex;
       align-items: center;
@@ -190,7 +281,7 @@
     .n-47 { color: #ffcc00; text-shadow: 2px 2px 0 #0044cc; }
     .n-21 { color: #cc0000; text-shadow: 2px 2px 0 #ffcc00; }
 
-    /* MAXIMIZED DRIVER LAST NAME */
+    /* MAXIMIZED DRIVER LAST NAME (STATIC & CLEAR) */
     .name {
       color: #ffffff;
       font-size: min(3.8vh, 2.1vw);
@@ -235,7 +326,7 @@
 <body>
 
   <header>
-    <!-- Left 45%: Vector NASCAR Bar Logo -->
+    <!-- Left 45%: Vector NASCAR Bar Logo with Occasional Light Sweep -->
     <div class="header-left">
       <svg class="nascar-logo-svg" viewBox="0 0 450 100">
         <g transform="skewX(-15)">
@@ -248,9 +339,13 @@
       </svg>
     </div>
 
-    <!-- Right 55%: Party Title -->
+    <!-- Right 55%: Party Title with Gently Swaying Flags -->
     <div class="header-right">
-      <h1 class="party-title">🏁 7TH ANNUAL RACE PARTY 🏁</h1>
+      <h1 class="party-title">
+        <span class="animated-flag">🏁</span>
+        7TH ANNUAL RACE PARTY
+        <span class="animated-flag right">🏁</span>
+      </h1>
     </div>
   </header>
 
