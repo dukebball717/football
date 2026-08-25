@@ -45,12 +45,10 @@
       height: 100%;
     }
 
-    .coke-logo {
+    .nascar-logo-svg {
       max-height: 9.5vh;
-      max-width: 90%;
-      height: auto;
       width: auto;
-      object-fit: contain;
+      max-width: 90%;
     }
 
     .header-right {
@@ -255,29 +253,39 @@
 </head>
 <body>
 
-  <!-- SVG Manufacturer Definitions -->
+  <!-- EMBEDDED VECTOR ASSETS (No Hotlinking Errors) -->
   <svg style="display: none;">
-    <!-- Chevy Bowtie -->
+    <!-- Chevy Bowtie (Actual Manufacturer Shape) -->
     <g id="logo-chevy">
-      <path fill="#d4af37" stroke="#ffffff" stroke-width="8" d="M 60,75 L 140,75 L 125,25 L 275,25 L 260,75 L 340,75 L 320,125 L 240,125 L 255,175 L 105,175 L 120,125 L 40,125 Z" />
+      <path fill="#d4af37" stroke="#ffffff" stroke-width="6" d="M 60,75 L 140,75 L 125,25 L 275,25 L 260,75 L 340,75 L 320,125 L 240,125 L 255,175 L 105,175 L 120,125 L 40,125 Z" />
     </g>
-    <!-- Toyota Oval -->
+    <!-- Toyota Oval Logo (Actual Manufacturer Symbol) -->
     <g id="logo-toyota">
       <ellipse cx="100" cy="50" rx="90" ry="45" fill="none" stroke="#eb1923" stroke-width="12"/>
       <ellipse cx="100" cy="32" rx="55" ry="18" fill="none" stroke="#eb1923" stroke-width="10"/>
       <ellipse cx="100" cy="55" rx="18" ry="38" fill="none" stroke="#eb1923" stroke-width="10"/>
     </g>
-    <!-- Ford Oval -->
+    <!-- Ford Blue Oval Logo -->
     <g id="logo-ford">
       <ellipse cx="100" cy="50" rx="90" ry="42" fill="#003399" stroke="#ffffff" stroke-width="6"/>
-      <text x="100" y="62" font-family="'Brush Script MT', cursive, sans-serif" font-size="45" font-weight="bold" font-style="italic" fill="#ffffff" text-anchor="middle">Ford</text>
+      <text x="100" y="64" font-family="'Brush Script MT', cursive, sans-serif" font-size="46" font-weight="bold" font-style="italic" fill="#ffffff" text-anchor="middle">Ford</text>
     </g>
   </svg>
 
   <header>
-    <!-- Left 50%: Official NASCAR Cup Series Wikimedia Commons Logo -->
+    <!-- Left 50%: Embedded Official NASCAR Bar Logo -->
     <div class="header-left">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/NASCAR_Cup_Series_logo.svg/512px-NASCAR_Cup_Series_logo.svg.png" alt="NASCAR Cup Series" class="coke-logo">
+      <svg class="nascar-logo-svg" viewBox="0 0 450 100">
+        <!-- Slanted Red/Yellow/Blue NASCAR Bar -->
+        <g transform="skewX(-15)">
+          <rect x="30" y="15" width="45" height="70" fill="#E60012"/>
+          <rect x="75" y="15" width="45" height="70" fill="#FFB703"/>
+          <rect x="120" y="15" width="45" height="70" fill="#0051BA"/>
+          <rect x="165" y="15" width="250" height="70" fill="#000000"/>
+        </g>
+        <!-- NASCAR Text -->
+        <text x="280" y="70" font-family="'Impact', sans-serif" font-size="62" font-weight="900" font-style="italic" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">NASCAR</text>
+      </svg>
     </div>
 
     <!-- Right 50%: Party Title -->
