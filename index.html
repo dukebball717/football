@@ -23,49 +23,51 @@
       padding: 1vh 1vw;
     }
 
-    /* HEADER & LOGO */
+    /* HEADER: SPLIT 50 / 50 */
     header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 2vw;
+      justify-content: space-between;
       height: 12vh;
       flex-shrink: 0;
       background: linear-gradient(180deg, #1b0003 0%, #08090b 100%);
       border-bottom: 3px solid #e60012;
       border-radius: 8px;
       margin-bottom: 0.8vh;
-      padding: 0 1.5vw;
+      padding: 0 2vw;
+    }
+
+    .header-left {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
     }
 
     .coke-logo {
-      height: 9.5vh;
+      max-height: 10.5vh;
+      max-width: 90%;
+      height: auto;
       width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(230, 0, 18, 0.5));
     }
 
-    .header-title-container {
+    .header-right {
+      width: 50%;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      height: 100%;
     }
 
     .party-title {
       color: #ffb703;
-      font-size: min(4.2vh, 3.2vw);
+      font-size: min(4.8vh, 3.6vw);
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 2px 2px 6px #000;
       line-height: 1;
-    }
-
-    .sub-title {
-      color: #e60012;
-      font-size: min(2.2vh, 1.5vw);
-      letter-spacing: 4px;
-      font-weight: 900;
-      margin-top: 0.3vh;
+      text-align: center;
     }
 
     /* GRID LAYOUT (5 Columns x 2 Rows) */
@@ -218,6 +220,14 @@
         overflow: auto;
         height: auto;
       }
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 1vh;
+      }
+      .header-left, .header-right {
+        width: 100%;
+      }
       .grid {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
@@ -233,12 +243,42 @@
 <body>
 
   <header>
-    <!-- Official Coca-Cola Zero Sugar Logo -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Cocacola_zerosugar_logo.svg" alt="Coca-Cola Zero Sugar" class="coke-logo">
+    <!-- Left 50%: Official Coke Zero Sugar 400 Rendered SVG Logo -->
+    <div class="header-left">
+      <svg class="coke-logo" viewBox="0 0 450 110">
+        <defs>
+          <linearGradient id="cokeRedGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff0015"/>
+            <stop offset="100%" stop-color="#99000d"/>
+          </linearGradient>
+          <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="50%" stop-color="#cccccc"/>
+            <stop offset="100%" stop-color="#888888"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Outer Badge Container -->
+        <rect x="5" y="5" width="440" height="100" rx="14" fill="#000000" stroke="#e60012" stroke-width="4"/>
+        
+        <!-- Main Red Chevron Banner -->
+        <path d="M 25 22 Q 225 -5 425 22 L 410 88 Q 225 115 40 88 Z" fill="url(#cokeRedGrad)" stroke="#ffffff" stroke-width="2"/>
+        
+        <!-- Script / Coca-Cola Styling -->
+        <text x="225" y="44" font-family="'Arial Black', -apple-system, sans-serif" font-weight="900" font-size="32" fill="#ffffff" text-anchor="middle" letter-spacing="1">Coca-Cola</text>
+        
+        <!-- ZERO SUGAR Badge -->
+        <rect x="115" y="50" width="220" height="25" rx="4" fill="#000000" stroke="url(#silverGrad)" stroke-width="1.5"/>
+        <text x="225" y="68" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle" letter-spacing="3">ZERO SUGAR</text>
+        
+        <!-- 400 Racing Sub-Text -->
+        <text x="225" y="98" font-family="'Impact', sans-serif" font-style="italic" font-weight="900" font-size="26" fill="#ffb703" text-anchor="middle" letter-spacing="2">4 0 0</text>
+      </svg>
+    </div>
 
-    <div class="header-title-container">
+    <!-- Right 50%: Party Title -->
+    <div class="header-right">
       <h1 class="party-title">🏁 7TH ANNUAL RACE PARTY 🏁</h1>
-      <div class="sub-title">DAYTONA INTERNATIONAL SPEEDWAY • COKE ZERO SUGAR 400</div>
     </div>
   </header>
 
@@ -265,7 +305,7 @@
 
     <!-- Pam -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x4) PAM</h2></div>
+      <div class="card-header"><h2>PAM 🏁 (x4)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-23">#23</div>
@@ -299,7 +339,7 @@
 
     <!-- Ron -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x4) RON</h2></div>
+      <div class="card-header"><h2>RON 🏁 (x4)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-5">#5</div>
@@ -333,7 +373,7 @@
 
     <!-- Scott -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x4) SCOTT</h2></div>
+      <div class="card-header"><h2>SCOTT 🏁 (x4)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-12">#12</div>
@@ -367,7 +407,7 @@
 
     <!-- Nick -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x4) NICK</h2></div>
+      <div class="card-header"><h2>NICK 🏁 (x4)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-45">#45</div>
@@ -401,7 +441,7 @@
 
     <!-- Zach -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x3) ZACH</h2></div>
+      <div class="card-header"><h2>ZACH 🏁 (x3)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-9">#9</div>
@@ -435,7 +475,7 @@
 
     <!-- Ace -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x2) ACE</h2></div>
+      <div class="card-header"><h2>ACE 🏁 (x2)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-11">#11</div>
@@ -469,7 +509,7 @@
 
     <!-- Nicole -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x2) NICOLE</h2></div>
+      <div class="card-header"><h2>NICOLE 🏁 (x2)</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-24">#24</div>
@@ -503,7 +543,7 @@
 
     <!-- Daniel -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x1) DANIEL</h2></div>
+      <div class="card-header"><h2>DANIEL 🏁</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-19">#19</div>
@@ -537,7 +577,7 @@
 
     <!-- KO3 -->
     <div class="card">
-      <div class="card-header"><h2>🏁(x1) KO3</h2></div>
+      <div class="card-header"><h2>KO3 🏁</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-22">#22</div>
