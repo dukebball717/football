@@ -20,7 +20,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 1vh 1vw;
+      padding: 1.2vh 1vw;
     }
 
     /* HEADER & LOGO */
@@ -29,7 +29,7 @@
       align-items: center;
       justify-content: center;
       gap: 2vw;
-      height: 10vh;
+      height: 11vh;
       flex-shrink: 0;
       background: linear-gradient(180deg, #1b0003 0%, #08090b 100%);
       border-bottom: 3px solid #e60012;
@@ -39,7 +39,7 @@
     }
 
     .coke-logo {
-      height: 7.5vh;
+      height: 8.5vh;
       width: auto;
       filter: drop-shadow(0 2px 6px rgba(230, 0, 18, 0.4));
     }
@@ -52,7 +52,7 @@
 
     .party-title {
       color: #ffb703;
-      font-size: min(3.8vh, 2.8vw);
+      font-size: min(4vh, 3vw);
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 2px 2px 4px #000;
@@ -61,9 +61,10 @@
 
     .sub-title {
       color: #e60012;
-      font-size: min(2vh, 1.4vw);
+      font-size: min(2.2vh, 1.5vw);
       letter-spacing: 4px;
       font-weight: 900;
+      margin-top: 0.3vh;
     }
 
     /* GRID LAYOUT (5 Columns x 2 Rows) */
@@ -72,7 +73,7 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 0.8vw;
-      height: 86vh;
+      height: 85vh;
       width: 100%;
     }
 
@@ -90,14 +91,14 @@
     .card-header {
       background: linear-gradient(180deg, #3a2b00 0%, #1e1600 100%);
       border-bottom: 2px solid #ffb703;
-      padding: 0.6vh 0.2vw;
+      padding: 0.8vh 0.4vw;
       text-align: center;
       flex-shrink: 0;
     }
 
     .card-header h2 {
       color: #ffffff;
-      font-size: min(2.8vh, 2vw);
+      font-size: min(2.8vh, 1.8vw);
       text-transform: uppercase;
       letter-spacing: 1px;
       text-shadow: 2px 2px 4px #000;
@@ -107,46 +108,32 @@
     .card-body {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       flex: 1;
-      padding: 0.5vh 0.5vw;
-      gap: 0.5vh;
+      padding: 0.6vh 0.6vw;
+      gap: 0.6vh;
     }
 
-    /* DRIVER ROW */
+    /* DRIVER ROW LAYOUT */
     .driver-row {
       display: flex;
       align-items: center;
       background: #1c2026;
       border-left: 4px solid #ffb703;
       border-radius: 6px;
-      padding: 0.4vh 0.6vw;
-      height: 31%;
-      gap: 0.6vw;
-    }
-
-    /* MAXIMIZED DRIVER NAME */
-    .name {
-      color: #ffffff;
-      font-size: min(3.2vh, 2.1vw);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 0.6vh 0.6vw;
       flex: 1;
-      line-height: 1;
-      text-shadow: 2px 2px 2px #000;
+      gap: 0.8vw;
+      min-width: 0;
     }
 
     /* STYLIZED RACING NUMBERS */
     .num {
       font-style: italic;
       font-weight: 900;
-      font-size: min(4.2vh, 2.6vw);
+      font-size: min(4.8vh, 2.6vw);
       line-height: 1;
-      min-width: 2.2em;
+      min-width: 2.1em;
       text-align: center;
       transform: skewX(-10deg);
       flex-shrink: 0;
@@ -184,11 +171,54 @@
     .n-47 { color: #ffcc00; text-shadow: 2px 2px 0 #0044cc; }
     .n-21 { color: #cc0000; text-shadow: 2px 2px 0 #ffcc00; }
 
-    /* MANUFACTURER LOGOS */
+    /* DRIVER INFO & STACKED LOGO CONTAINER */
+    .driver-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      min-width: 0;
+      gap: 0.3vh;
+    }
+
+    .name {
+      color: #ffffff;
+      font-size: min(2.5vh, 1.4vw);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.05;
+      text-shadow: 2px 2px 2px #000;
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .mfr-container {
+      display: flex;
+      align-items: center;
+      margin-top: 0.2vh;
+    }
+
     .mfr-logo {
-      height: min(3vh, 1.8vw);
+      height: min(2.2vh, 1.3vw);
       width: auto;
-      flex-shrink: 0;
+    }
+
+    /* Mobile / Small aspect ratio fallback */
+    @media (max-aspect-ratio: 1/1) {
+      body {
+        overflow: auto;
+        height: auto;
+      }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        height: auto;
+      }
+      .name { font-size: 16px; }
+      .num { font-size: 26px; }
+      .mfr-logo { height: 16px; }
     }
   </style>
 </head>
@@ -233,198 +263,306 @@
 
     <!-- Pam -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁🏁🏁 Pam</h2></div>
+      <div class="card-header"><h2>🏁 (x4) Pam</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-23">#23</div>
-          <div class="name">Bubba Wallace</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Bubba Wallace</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-54">#54</div>
-          <div class="name">Ty Gibbs</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Ty Gibbs</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-2">#2</div>
-          <div class="name">Austin Cindric</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Austin Cindric</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Ron -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁🏁🏁 Ron</h2></div>
+      <div class="card-header"><h2>🏁 (x4) Ron</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-5">#5</div>
-          <div class="name">Kyle Larson</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Kyle Larson</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-88">#88</div>
-          <div class="name">Connor Zilisch</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Connor Zilisch</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-71">#71</div>
-          <div class="name">Michael McDowell</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Michael McDowell</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Scott -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁🏁🏁 Scott</h2></div>
+      <div class="card-header"><h2>🏁 (x4) Scott</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-12">#12</div>
-          <div class="name">Ryan Blaney</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Ryan Blaney</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-17">#17</div>
-          <div class="name">Chris Buescher</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Chris Buescher</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-60">#60</div>
-          <div class="name">Ryan Preece</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Ryan Preece</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Nick -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁🏁🏁 Nick</h2></div>
+      <div class="card-header"><h2>🏁 (x4) Nick</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-45">#45</div>
-          <div class="name">Tyler Reddick</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Tyler Reddick</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-6">#6</div>
-          <div class="name">Brad Keselowski</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Brad Keselowski</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-4">#4</div>
-          <div class="name">Noah Gragson</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Noah Gragson</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Zach -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁🏁 Zach</h2></div>
+      <div class="card-header"><h2>🏁 (x3) Zach</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-9">#9</div>
-          <div class="name">Chase Elliott</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Chase Elliott</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-77">#77</div>
-          <div class="name">Carson Hocevar</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Carson Hocevar</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-67">#67</div>
-          <div class="name">Corey Heim</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Corey Heim</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Ace -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁 Ace</h2></div>
+      <div class="card-header"><h2>🏁 (x2) Ace</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-11">#11</div>
-          <div class="name">Denny Hamlin</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Denny Hamlin</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-48">#48</div>
-          <div class="name">Alex Bowman</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Alex Bowman</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-43">#43</div>
-          <div class="name">Erik Jones</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Erik Jones</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Nicole -->
     <div class="card">
-      <div class="card-header"><h2>🏁🏁 Nicole</h2></div>
+      <div class="card-header"><h2>🏁 (x2) Nicole</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-24">#24</div>
-          <div class="name">William Byron</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">William Byron</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-1">#1</div>
-          <div class="name">Ross Chastain</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Ross Chastain</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-7">#7</div>
-          <div class="name">Daniel Suarez</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Daniel Suarez</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Daniel -->
     <div class="card">
-      <div class="card-header"><h2>🏁 Daniel</h2></div>
+      <div class="card-header"><h2>🏁 (x1) Daniel</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-19">#19</div>
-          <div class="name">Chase Briscoe</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Chase Briscoe</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-3">#3</div>
-          <div class="name">Austin Dillon</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Austin Dillon</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-38">#38</div>
-          <div class="name">Zane Smith</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Zane Smith</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- KO3 -->
     <div class="card">
-      <div class="card-header"><h2>🏁 KO3</h2></div>
+      <div class="card-header"><h2>🏁 (x1) KO3</h2></div>
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-22">#22</div>
-          <div class="name">Joey Logano</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Joey Logano</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-97">#97</div>
-          <div class="name">Shane van Gisbergen</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Shane van Gisbergen</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-34">#34</div>
-          <div class="name">Todd Gilliland</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Todd Gilliland</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -435,18 +573,30 @@
       <div class="card-body">
         <div class="driver-row">
           <div class="num n-20">#20</div>
-          <div class="name">Christopher Bell</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+          <div class="driver-info">
+            <div class="name">Christopher Bell</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#toyota"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-47">#47</div>
-          <div class="name">Ricky Stenhouse Jr.</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+          <div class="driver-info">
+            <div class="name">Ricky Stenhouse Jr.</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#chevy"/></svg>
+            </div>
+          </div>
         </div>
         <div class="driver-row">
           <div class="num n-21">#21</div>
-          <div class="name">Josh Berry</div>
-          <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+          <div class="driver-info">
+            <div class="name">Josh Berry</div>
+            <div class="mfr-container">
+              <svg class="mfr-logo" viewBox="0 0 60 32"><use href="#ford"/></svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
