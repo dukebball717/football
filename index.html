@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>7th Annual Race Party - Coke Zero Sugar 400</title>
   <style>
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -24,25 +30,62 @@
       position: relative;
     }
 
-    /* SUBTLE ROTATING CHECKERED BACKGROUND WATERMARK */
+    /* 3. BROADCAST BACKGROUND TEXTURE & AMBIENT LIGHT MOTION */
     body::before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 140vw;
-      height: 140vh;
-      margin-top: -70vh;
-      margin-left: -70vw;
-      background: repeating-conic-gradient(rgba(255, 255, 255, 0.02) 0% 25%, transparent 0% 50%) 50% / 80px 80px;
-      animation: rotateWatermark 120s linear infinite;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 50% 20%, rgba(230, 0, 18, 0.12) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 10px);
       pointer-events: none;
       z-index: 0;
     }
 
-    @keyframes rotateWatermark {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    body::after {
+      content: '';
+      position: absolute;
+      top: -50vh;
+      left: -50vw;
+      width: 200vw;
+      height: 200vh;
+      background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+      animation: ambientMotion 20s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes ambientMotion {
+      0% { transform: translate(-5%, -5%) scale(1); }
+      100% { transform: translate(5%, 5%) scale(1.05); }
+    }
+
+    /* 4. THIN BROADCAST ACCENT SWEEP LINE */
+    .broadcast-scanline {
+      position: absolute;
+      left: 0;
+      top: -10px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 183, 3, 0) 15%, 
+        rgba(255, 255, 255, 0.85) 50%, 
+        rgba(255, 183, 3, 0) 85%, 
+        transparent 100%
+      );
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.5);
+      opacity: 0;
+      animation: broadcastSweep 13s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    @keyframes broadcastSweep {
+      0%, 82% { top: -10px; opacity: 0; }
+      84% { opacity: 0.7; }
+      93% { top: 105vh; opacity: 0.7; }
+      95%, 100% { top: 105vh; opacity: 0; }
     }
 
     /* HEADER */
@@ -59,6 +102,7 @@
       border-radius: 8px;
       margin-bottom: 0.8vh;
       padding: 0 1.5vw;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
     }
 
     .header-left {
@@ -71,30 +115,30 @@
       overflow: hidden;
     }
 
-    /* NASCAR LOGO LIGHT SWEEP */
+    /* 1. NASCAR LOGO LIGHT SWEEP (EVERY ~10 SECONDS) */
     .header-left::after {
       content: '';
       position: absolute;
       top: -50%;
       left: -150%;
-      width: 50%;
+      width: 60%;
       height: 200%;
       background: linear-gradient(
         115deg,
         transparent 0%,
-        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0) 35%,
         rgba(255, 255, 255, 0.45) 50%,
-        rgba(255, 255, 255, 0) 70%,
+        rgba(255, 255, 255, 0) 65%,
         transparent 100%
       );
-      transform: rotate(20deg);
-      animation: logoShimmer 6s infinite ease-in-out;
+      transform: rotate(15deg);
+      animation: logoSweep 10s ease-in-out infinite;
       pointer-events: none;
     }
 
-    @keyframes logoShimmer {
-      0%, 75% { left: -150%; }
-      100% { left: 200%; }
+    @keyframes logoSweep {
+      0%, 78% { left: -150%; }
+      90%, 100% { left: 200%; }
     }
 
     .nascar-logo-svg {
@@ -124,21 +168,21 @@
       gap: 0.5vw;
     }
 
-    /* GENTLE MOVING CHECKERED FLAGS */
+    /* SUBTLE MOVING CHECKERED FLAGS */
     .animated-flag {
       display: inline-block;
-      animation: flagWiggle 3.5s ease-in-out infinite alternate;
+      animation: flagWiggle 4s ease-in-out infinite alternate;
       transform-origin: bottom center;
     }
 
     .animated-flag.right {
-      animation-delay: 1.75s;
+      animation-delay: 2s;
     }
 
     @keyframes flagWiggle {
-      0% { transform: rotate(-8deg) translateY(0); }
-      50% { transform: rotate(0deg) translateY(-2px); }
-      100% { transform: rotate(8deg) translateY(0); }
+      0% { transform: rotate(-6deg); }
+      50% { transform: rotate(0deg); }
+      100% { transform: rotate(6deg); }
     }
 
     /* GRID LAYOUT (5 Columns x 2 Rows) */
@@ -153,32 +197,58 @@
       width: 100%;
     }
 
-    /* CARD STYLING WITH SUBTLE GOLD PULSE */
+    /* 2. CARD STYLING WITH UNDERSTATED TRAVELING GOLD BORDER HIGHLIGHT */
     .card {
+      position: relative;
       background: #0f1115;
-      border: 2px solid #ffb703;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: goldPulse 4s ease-in-out infinite;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.8);
     }
 
-    /* Staggered pulse timing across cards */
-    .card:nth-child(2n) { animation-delay: 0.8s; }
-    .card:nth-child(3n) { animation-delay: 1.6s; }
-    .card:nth-child(4n) { animation-delay: 2.4s; }
-    .card:nth-child(5n) { animation-delay: 3.2s; }
+    /* Animated Gold Border Overlay */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      padding: 2px;
+      background: conic-gradient(
+        from var(--angle),
+        #ffb703 0%,
+        #fff3a1 8%,
+        #ffb703 16%,
+        #3d2c00 45%,
+        #ffb703 80%,
+        #fff3a1 88%,
+        #ffb703 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderRotate 12s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
 
-    @keyframes goldPulse {
-      0%, 100% {
-        border-color: #ffb703;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.7), 0 0 4px rgba(255, 183, 3, 0.15);
-      }
-      50% {
-        border-color: #ffd000;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.8), 0 0 12px rgba(255, 183, 3, 0.45);
-      }
+    /* Staggered border animation start times for organic broadcast look */
+    .card:nth-child(2n)::before { animation-delay: -2.5s; }
+    .card:nth-child(3n)::before { animation-delay: -5s; }
+    .card:nth-child(4n)::before { animation-delay: -7.5s; }
+    .card:nth-child(5n)::before { animation-delay: -10s; }
+
+    @keyframes borderRotate {
+      to { --angle: 360deg; }
+    }
+
+    /* 5. SUBTLE HOVER EFFECT (TV / INTERACTIVE READY) */
+    .card {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .card:hover {
+      transform: translateY(-2px);
     }
 
     /* PARTICIPANT HEADERS */
@@ -192,6 +262,8 @@
       justify-content: center;
       height: 15%;
       flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .card-header h2 {
@@ -222,9 +294,11 @@
       flex: 1;
       padding: 0.5vh 0.4vw;
       gap: 0.5vh;
+      position: relative;
+      z-index: 1;
     }
 
-    /* CLEAN & STATIC DRIVER ROW LAYOUT */
+    /* COMPLETELY STATIC & READABLE DRIVER ROW LAYOUT */
     .driver-row {
       display: flex;
       align-items: center;
@@ -237,7 +311,7 @@
       min-width: 0;
     }
 
-    /* STYLIZED RACING NUMBERS */
+    /* STYLIZED RACING NUMBERS (STATIC) */
     .num {
       font-style: italic;
       font-weight: 900;
@@ -281,7 +355,7 @@
     .n-47 { color: #ffcc00; text-shadow: 2px 2px 0 #0044cc; }
     .n-21 { color: #cc0000; text-shadow: 2px 2px 0 #ffcc00; }
 
-    /* MAXIMIZED DRIVER LAST NAME (STATIC & CLEAR) */
+    /* MAXIMIZED DRIVER LAST NAME (STATIC & HIGH-LEGIBILITY) */
     .name {
       color: #ffffff;
       font-size: min(3.8vh, 2.1vw);
@@ -294,6 +368,20 @@
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
+    }
+
+    /* ACCESSIBILITY: RESPECT PREFERS-REDUCED-MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      body::after,
+      .broadcast-scanline,
+      .header-left::after,
+      .animated-flag,
+      .card::before {
+        animation: none !important;
+      }
+      .card::before {
+        background: #ffb703;
+      }
     }
 
     /* Responsive Mobile Fallback */
@@ -325,8 +413,11 @@
 </head>
 <body>
 
+  <!-- Broadcast-style subtle sweep line -->
+  <div class="broadcast-scanline"></div>
+
   <header>
-    <!-- Left 45%: Vector NASCAR Bar Logo with Occasional Light Sweep -->
+    <!-- NASCAR Logo with subtle light sweep -->
     <div class="header-left">
       <svg class="nascar-logo-svg" viewBox="0 0 450 100">
         <g transform="skewX(-15)">
@@ -339,7 +430,7 @@
       </svg>
     </div>
 
-    <!-- Right 55%: Party Title with Gently Swaying Flags -->
+    <!-- Title with gentle flags -->
     <div class="header-right">
       <h1 class="party-title">
         <span class="animated-flag">🏁</span>
