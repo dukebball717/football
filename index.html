@@ -1,209 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football Scorer</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  button { margin: 5px; padding: 10px 20px; font-size: 16px; }
-  .scores { margin-top: 20px; }
-  #clock { font-size: 24px; margin: 10px 0; }
-  #teams img { height: 50px; margin: 0 10px; vertical-align: middle; }
-  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-  th { background-color: #f2f2f2; }
-  #payouts { margin-top: 20px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7th Annual Race Party</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: 'Arial Black', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5vh 1.5vw;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1vh;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      color: #ffb703;
+      font-size: 3.2vh;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1.2vw;
+      flex-grow: 1;
+      height: calc(100vh - 7vh);
+    }
+
+    .card {
+      background: #181818;
+      border: 2px solid #ffb703;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+
+    .card-header {
+      background: #2b1f00;
+      border-bottom: 2px solid #ffb703;
+      padding: 0.8vh 0.5vw;
+      text-align: center;
+    }
+
+    .card-header h2 {
+      color: #ffffff;
+      font-size: 2.6vh;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex-grow: 1;
+      padding: 0.8vh 0.8vw;
+    }
+
+    .driver-row {
+      display: flex;
+      align-items: center;
+      background: #242424;
+      padding: 0.8vh 0.8vw;
+      border-radius: 8px;
+    }
+
+    .number {
+      color: #ffb703;
+      font-size: 2.8vh;
+      font-weight: 900;
+      width: 4.2vw;
+      flex-shrink: 0;
+    }
+
+    .driver-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .name {
+      color: #ffffff;
+      font-size: 2.1vh;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .mfr {
+      color: #a0a0a0;
+      font-size: 1.3vh;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 0.2vh;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Football Game Scorer</h2>
+  <header>
+    <h1>🏁 7th Annual Race Party 🏁</h1>
+  </header>
 
-<label>Select Game: </label>
-<select id="gameSelect">
-  <option value="" disabled selected>Choose a game</option>
-  <option value="bills-dolphins" data-home="BUF" data-away="MIA">Bills vs Dolphins</option>
-  <option value="cowboys-giants" data-home="DAL" data-away="NYG">Cowboys vs Giants</option>
-  <!-- Add new games every Wednesday -->
-</select>
+  <div class="grid">
+    <!-- Pam -->
+    <div class="card">
+      <div class="card-header"><h2>Pam</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#23</div>
+          <div class="driver-details">
+            <div class="name">Bubba Wallace</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#54</div>
+          <div class="driver-details">
+            <div class="name">Ty Gibbs</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#2</div>
+          <div class="driver-details">
+            <div class="name">Austin Cindric</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div id="teams" style="margin-top:10px;"></div>
+    <!-- Ron -->
+    <div class="card">
+      <div class="card-header"><h2>Ron</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#5</div>
+          <div class="driver-details">
+            <div class="name">Kyle Larson</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#88</div>
+          <div class="driver-details">
+            <div class="name">Connor Zilisch</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#71</div>
+          <div class="driver-details">
+            <div class="name">Michael McDowell</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div style="margin-top:20px;">
-  <label>Quarter: </label>
-  <input type="number" id="quarter" min="1" max="4" value="1"><br><br>
+    <!-- Scott -->
+    <div class="card">
+      <div class="card-header"><h2>Scott</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#12</div>
+          <div class="driver-details">
+            <div class="name">Ryan Blaney</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#17</div>
+          <div class="driver-details">
+            <div class="name">Chris Buescher</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#60</div>
+          <div class="driver-details">
+            <div class="name">Ryan Preece</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <label>Minute: </label>
-  <input type="number" id="minute" min="0" max="14" value="14">
-  <label>Second: </label>
-  <input type="number" id="second" min="0" max="59" value="0"><br><br>
+    <!-- Nick -->
+    <div class="card">
+      <div class="card-header"><h2>Nick</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#45</div>
+          <div class="driver-details">
+            <div class="name">Tyler Reddick</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#6</div>
+          <div class="driver-details">
+            <div class="name">Brad Keselowski</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#4</div>
+          <div class="driver-details">
+            <div class="name">Noah Gragson</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <label>Assign Window to Player: </label>
-  <select id="manualPlayer">
-    <option value="Russell">Russell</option>
-    <option value="Daniel">Daniel</option>
-    <option value="Zach">Zach</option>
-  </select>
-</div>
+    <!-- Zach -->
+    <div class="card">
+      <div class="card-header"><h2>Zach</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#9</div>
+          <div class="driver-details">
+            <div class="name">Chase Elliott</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#77</div>
+          <div class="driver-details">
+            <div class="name">Carson Hocevar</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#67</div>
+          <div class="driver-details">
+            <div class="name">Corey Heim</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p>Current Window Owner: <span id="currentPlayer">Russell</span></p>
+    <!-- Ace -->
+    <div class="card">
+      <div class="card-header"><h2>Ace</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#11</div>
+          <div class="driver-details">
+            <div class="name">Denny Hamlin</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#48</div>
+          <div class="driver-details">
+            <div class="name">Alex Bowman</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#43</div>
+          <div class="driver-details">
+            <div class="name">Erik Jones</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<button onclick="score('FG')">Field Goal ($1)</button>
-<button onclick="score('TD')">Touchdown ($4)</button>
-<button onclick="score('Safety')">Safety ($5)</button>
-<button onclick="score('STTD')">Special Teams TD ($7)</button>
-<button onclick="score('DefTD')">Defensive TD ($7)</button>
-<button onclick="undoScore()">Undo Last Score</button>
+    <!-- Nicole -->
+    <div class="card">
+      <div class="card-header"><h2>Nicole</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#24</div>
+          <div class="driver-details">
+            <div class="name">William Byron</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#1</div>
+          <div class="driver-details">
+            <div class="name">Ross Chastain</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#7</div>
+          <div class="driver-details">
+            <div class="name">Daniel Suarez</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="scores">
-  <h3>Scores</h3>
-  <p id="scoreR">Russell: $0</p>
-  <p id="scoreD">Daniel: $0</p>
-  <p id="scoreZ">Zach: $0</p>
-</div>
+    <!-- Daniel -->
+    <div class="card">
+      <div class="card-header"><h2>Daniel</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#19</div>
+          <div class="driver-details">
+            <div class="name">Chase Briscoe</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#3</div>
+          <div class="driver-details">
+            <div class="name">Austin Dillon</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#38</div>
+          <div class="driver-details">
+            <div class="name">Zane Smith</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<h3>Scoring History</h3>
-<table id="historyTable">
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th>Quarter</th>
-      <th>Time</th>
-      <th>Score Type</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+    <!-- KO3 -->
+    <div class="card">
+      <div class="card-header"><h2>KO3</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#22</div>
+          <div class="driver-details">
+            <div class="name">Joey Logano</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#97</div>
+          <div class="driver-details">
+            <div class="name">Shane van Gisbergen</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#34</div>
+          <div class="driver-details">
+            <div class="name">Todd Gilliland</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div id="payouts">
-  <h3>Zero-Sum Payouts (Winner Collects Excess)</h3>
-  <table id="payoutTable">
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Net Payout</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<script>
-let scores = {Russell:0, Daniel:0, Zach:0};
-let quarter = 1;
-let minutes = 14;
-let seconds = 0;
-let history = []; // store scoring history
-
-const values = {FG:1, TD:4, Safety:5, STTD:7, DefTD:7};
-
-function updateClock() {
-  document.getElementById('currentPlayer').innerText = getPlayer();
-}
-
-function getPlayer() {
-  return document.getElementById('manualPlayer').value;
-}
-
-function score(type) {
-  const player = getPlayer();
-  const amount = values[type];
-  scores[player] += amount;
-
-  // Add to history
-  const entry = {
-    player,
-    quarter,
-    time: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
-    type,
-    amount
-  };
-  history.push(entry);
-  updateScores();
-  updateHistory();
-  updatePayouts();
-}
-
-function undoScore() {
-  if(history.length === 0) return;
-  const last = history.pop();
-  scores[last.player] -= last.amount;
-  updateScores();
-  updateHistory();
-  updatePayouts();
-}
-
-function updateScores() {
-  document.getElementById('scoreR').innerText = `Russell: $${scores.Russell}`;
-  document.getElementById('scoreD').innerText = `Daniel: $${scores.Daniel}`;
-  document.getElementById('scoreZ').innerText = `Zach: $${scores.Zach}`;
-}
-
-function updateHistory() {
-  const tbody = document.querySelector('#historyTable tbody');
-  tbody.innerHTML = '';
-  history.forEach(h => {
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${h.player}</td><td>${h.quarter}</td><td>${h.time}</td><td>${h.type}</td><td>$${h.amount}</td>`;
-    tbody.appendChild(row);
-  });
-}
-
-function updatePayouts() {
-  const players = Object.keys(scores);
-  let winner = players[0];
-  players.forEach(p => { if(scores[p] > scores[winner]) winner = p; });
-
-  const tbody = document.querySelector('#payoutTable tbody');
-  tbody.innerHTML = '';
-
-  players.forEach(p => {
-    let net = 0;
-    if(p === winner) {
-      players.forEach(other => {
-        if(other !== winner) net += scores[winner] - scores[other];
-      });
-    } else {
-      net = scores[p] - scores[winner]; // negative value (owes money)
-    }
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${p}</td><td>$${net}</td>`;
-    tbody.appendChild(row);
-  });
-}
-
-// Event listeners
-document.getElementById('quarter').addEventListener('change', () => {
-  quarter = parseInt(document.getElementById('quarter').value);
-  updateClock();
-});
-document.getElementById('minute').addEventListener('change', () => {
-  minutes = parseInt(document.getElementById('minute').value);
-  updateClock();
-});
-document.getElementById('second').addEventListener('change', () => {
-  seconds = parseInt(document.getElementById('second').value);
-  updateClock();
-});
-
-// Game selection and logos
-document.getElementById('gameSelect').addEventListener('change', function() {
-  const selected = this.selectedOptions[0];
-  const home = selected.getAttribute('data-home');
-  const away = selected.getAttribute('data-away');
-  const container = document.getElementById('teams');
-  container.innerHTML = `
-    <img src="https://a.espncdn.com/i/teamlogos/nfl/500/${home}.png" alt="${home}">
-    <strong>${selected.text}</strong>
-    <img src="https://a.espncdn.com/i/teamlogos/nfl/500/${away}.png" alt="${away}">
-  `;
-});
-
-updateClock();
-updatePayouts();
-</script>
+    <!-- Brenda -->
+    <div class="card">
+      <div class="card-header"><h2>Brenda</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="number">#20</div>
+          <div class="driver-details">
+            <div class="name">Christopher Bell</div>
+            <div class="mfr">Toyota</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#47</div>
+          <div class="driver-details">
+            <div class="name">Ricky Stenhouse Jr.</div>
+            <div class="mfr">Chevrolet</div>
+          </div>
+        </div>
+        <div class="driver-row">
+          <div class="number">#21</div>
+          <div class="driver-details">
+            <div class="name">Josh Berry</div>
+            <div class="mfr">Ford</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
+
