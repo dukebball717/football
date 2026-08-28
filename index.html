@@ -1,335 +1,675 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>7th Annual Race Party</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:ital,wght@0,500;0,700;1,700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --asphalt:#0b0d10;
-    --surface:#151a22;
-    --surface-2:#1b212b;
-    --hairline:#2c3340;
-    --caution:#f5c518;
-    --chrome:#e7eaee;
-    --chrome-dim:#93a0ad;
-    --chevy:#f5b400;
-    --ford:#2f8fd6;
-    --toyota:#e33b3b;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7th Annual Race Party - Coke Zero Sugar 400</title>
+  <style>
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
 
-  *{box-sizing:border-box;}
-  html,body{height:100%; margin:0; overflow:hidden;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body{
-    background:radial-gradient(ellipse at top, #171d26 0%, var(--asphalt) 60%);
-    color:var(--chrome);
-    font-family:'Inter', sans-serif;
-  }
+    body {
+      background-color: #060709;
+      color: #ffffff;
+      font-family: 'Impact', 'Arial Black', -apple-system, BlinkMacSystemFont, sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 0.8vh 0.8vw;
+      position: relative;
+    }
 
-  .page{
-    height:100vh;
-    width:100vw;
-    display:flex;
-    flex-direction:column;
-    padding:3.2vh 1.4vw 1.2vh;
-  }
+    /* BROADCAST BACKGROUND TEXTURE & AMBIENT LIGHT MOTION */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 50% 20%, rgba(230, 0, 18, 0.12) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0 2px, transparent 2px 10px);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* ---------- HEADER ---------- */
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:2vw;
-    flex:0 0 auto;
-    margin-bottom:1.2vh;
-  }
+    body::after {
+      content: '';
+      position: absolute;
+      top: -50vh;
+      left: -50vw;
+      width: 200vw;
+      height: 200vh;
+      background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+      animation: ambientMotion 20s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .logo-slot{
-    flex:0 0 auto;
-    height:9vh;
-    width:16vw;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .logo-slot img{ max-height:100%; max-width:100%; object-fit:contain; }
-  .logo-fallback{
-    font-family:'Oswald', sans-serif;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    font-size:1.35vh;
-    color:var(--chrome-dim);
-    border:1px dashed var(--hairline);
-    border-radius:4px;
-    padding:1vh 1vw;
-    text-align:center;
-    line-height:1.3;
-  }
+    @keyframes ambientMotion {
+      0% { transform: translate(-5%, -5%) scale(1); }
+      100% { transform: translate(5%, 5%) scale(1.05); }
+    }
 
-  h1{
-    flex:1;
-    text-align:center;
-    font-family:'Oswald', sans-serif;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    font-size:5.4vh;
-    margin:0;
-    color:#fff;
-    text-shadow:0 0 3vh rgba(245,197,24,.18);
-  }
-  h1 span{ color:var(--caution); }
+    /* BROADCAST ACCENT SWEEP LINE */
+    .broadcast-scanline {
+      position: absolute;
+      left: 0;
+      top: -10px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 183, 3, 0) 15%, 
+        rgba(255, 255, 255, 0.85) 50%, 
+        rgba(255, 183, 3, 0) 85%, 
+        transparent 100%
+      );
+      box-shadow: 0 0 12px rgba(255, 183, 3, 0.5);
+      opacity: 0;
+      animation: broadcastSweep 13s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none;
+      z-index: 99;
+    }
 
-  /* ---------- CHECKERED STRIPS ---------- */
-  .checker-strip{
-    flex:0 0 auto;
-    height:1vh;
-    background-image:
-      linear-gradient(45deg,#000 25%,transparent 25%,transparent 75%,#000 75%),
-      linear-gradient(45deg,#000 25%,transparent 25%,transparent 75%,#000 75%);
-    background-color:#eee;
-    background-size:1.6vh 1.6vh;
-    background-position:0 0, .8vh .8vh;
-    margin-bottom:1.2vh;
-    border-radius:2px;
-  }
+    @keyframes broadcastSweep {
+      0%, 82% { top: -10px; opacity: 0; }
+      84% { opacity: 0.7; }
+      93% { top: 105vh; opacity: 0.7; }
+      95%, 100% { top: 105vh; opacity: 0; }
+    }
 
-  /* ---------- BOARD ---------- */
-  main{
-    flex:1 1 auto;
-    min-height:0;
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    grid-template-rows:repeat(2, 1fr);
-    gap:1vh 0.8vw;
-  }
+    /* HEADER */
+    header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 10vh;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #180003 0%, #060709 100%);
+      border-bottom: 3px solid #e60012;
+      border-radius: 8px;
+      margin-bottom: 0.8vh;
+      padding: 0 1.5vw;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
 
-  .pool{
-    min-height:0;
-    background:var(--surface);
-    border:1px solid var(--hairline);
-    border-radius:6px;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
+    .header-left {
+      width: 45%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100%;
+    }
 
-  .pool-head{
-    flex:0 0 auto;
-    background:var(--surface-2);
-    border-bottom:2px solid var(--caution);
-    padding:.8vh .8vw;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:.5vw;
-  }
+    /* TV-BULLETPROOF NASCAR HTML/CSS LOGO */
+    .nascar-bar-logo {
+      display: flex;
+      align-items: center;
+      height: 6.5vh;
+      transform: skewX(-15deg);
+      gap: 4px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      padding-right: 2px;
+    }
 
-  .pool-name{
-    font-family:'Oswald', sans-serif;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    font-size:3.1vh;
-    color:#fff;
-    line-height:1.05;
-  }
+    .nascar-bar-logo .bar {
+      height: 100%;
+      border-radius: 2px;
+    }
 
-  .flag-badge{
-    display:flex;
-    align-items:center;
-    gap:.35vw;
-    font-family:'Oswald', sans-serif;
-    font-weight:600;
-    font-size:1.9vh;
-    color:var(--caution);
-    flex:0 0 auto;
-  }
+    .nascar-bar-logo .bar-red { width: 1.2vw; background-color: #E60012; }
+    .nascar-bar-logo .bar-yellow { width: 1.2vw; background-color: #FFB703; }
+    .nascar-bar-logo .bar-blue { width: 1.2vw; background-color: #0051BA; }
+    
+    .nascar-bar-logo .bar-black {
+      background-color: #000000;
+      padding: 0 1.5vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      border: 1px solid #222;
+      border-radius: 2px;
+    }
 
-  .flag-icon{
-    width:2.4vh;
-    height:1.7vh;
-    flex:0 0 auto;
-    border:1px solid #000;
-    border-radius:1px;
-    background-image:
-      linear-gradient(45deg,#000 25%,transparent 25%,transparent 75%,#000 75%),
-      linear-gradient(45deg,#000 25%,transparent 25%,transparent 75%,#000 75%);
-    background-color:#fff;
-    background-size:.85vh .85vh;
-    background-position:0 0, .425vh .425vh;
-  }
+    .nascar-bar-logo .bar-black span {
+      color: #ffffff;
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      font-size: min(4.5vh, 2.8vw);
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: 4px;
+      line-height: 1;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    }
 
-  .drivers{
-    flex:1 1 auto;
-    min-height:0;
-    display:grid;
-    grid-template-rows:repeat(3, 1fr);
-  }
+    /* NASCAR LOGO LIGHT SWEEP */
+    .nascar-bar-logo::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -150%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 35%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0) 65%,
+        transparent 100%
+      );
+      transform: rotate(15deg);
+      animation: logoSweep 10s ease-in-out infinite;
+      pointer-events: none;
+    }
 
-  .driver{
-    display:flex;
-    align-items:center;
-    gap:.7vw;
-    padding:0 .8vw;
-    border-top:1px solid var(--hairline);
-  }
+    @keyframes logoSweep {
+      0%, 78% { left: -150%; }
+      90%, 100% { left: 200%; }
+    }
 
-  .roundel{
-    flex:0 0 auto;
-    width:5.4vh;
-    height:5.4vh;
-    border-radius:50%;
-    background:#fff;
-    border:.5vh solid var(--num-color, var(--chrome-dim));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:'Oswald', sans-serif;
-    font-weight:700;
-    font-style:italic;
-    font-size:2.5vh;
-    color:#111;
-  }
+    .header-right {
+      width: 55%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+    }
 
-  .driver-name{
-    font-family:'Oswald', sans-serif;
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:.02em;
-    font-size:2.9vh;
-    color:#fff;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-</style>
+    .party-title {
+      color: #ffb703;
+      font-size: min(4.2vh, 3vw);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 6px #000;
+      line-height: 1;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 0.5vw;
+    }
+
+    /* SUBTLE MOVING CHECKERED FLAGS */
+    .animated-flag {
+      display: inline-block;
+      animation: flagWiggle 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    .animated-flag.right {
+      animation-delay: 2s;
+    }
+
+    @keyframes flagWiggle {
+      0% { transform: rotate(-6deg); }
+      50% { transform: rotate(0deg); }
+      100% { transform: rotate(6deg); }
+    }
+
+    /* GRID LAYOUT (5 Columns x 2 Rows) */
+    .grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 0.5vw;
+      height: 87vh;
+      width: 100%;
+    }
+
+    /* CARD STYLING & TV FALLBACK BORDER */
+    .card {
+      position: relative;
+      background: #0b0d11;
+      border: 2px solid #ffb703;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.8);
+      transition: transform 0.3s ease;
+    }
+
+    /* Animated Gold Border Overlay */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 8px;
+      padding: 2px;
+      background: conic-gradient(
+        from var(--angle),
+        #ffb703 0%,
+        #fff3a1 8%,
+        #ffb703 16%,
+        #3d2c00 45%,
+        #ffb703 80%,
+        #fff3a1 88%,
+        #ffb703 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderRotate 12s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .card:nth-child(2n)::before { animation-delay: -2.5s; }
+    .card:nth-child(3n)::before { animation-delay: -5s; }
+    .card:nth-child(4n)::before { animation-delay: -7.5s; }
+    .card:nth-child(5n)::before { animation-delay: -10s; }
+
+    @keyframes borderRotate {
+      to { --angle: 360deg; }
+    }
+
+    /* PARTICIPANT HEADERS */
+    .card-header {
+      background: linear-gradient(180deg, #332600 0%, #171100 100%);
+      border-bottom: 2px solid #ffb703;
+      padding: 0.3vh 0.2vw;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 14%;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header h2 {
+      color: #ffffff;
+      font-size: min(3.4vh, 2.1vw);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px #000;
+      white-space: nowrap;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4vw;
+    }
+
+    .flag-info {
+      font-size: 0.7em;
+      color: #ffb703;
+      vertical-align: middle;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+      padding: 0.4vh 0.3vw;
+      gap: 0.4vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* DRIVER ROW OPTIMIZED TO FILL THE ENTIRE BOX */
+    .driver-row {
+      display: flex;
+      align-items: center;
+      background: #12161f;
+      border-left: 5px solid #ffb703;
+      border-radius: 5px;
+      padding: 0 0.3vw;
+      height: 31%;
+      gap: 0.3vw;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* NUMBERS MAXIMIZED FOR DISTANCE VIEWING */
+    .num {
+      font-style: italic;
+      font-weight: 900;
+      font-size: min(5.2vh, 2.7vw);
+      line-height: 1;
+      min-width: 1.6em;
+      text-align: center;
+      transform: skewX(-8deg);
+      flex-shrink: 0;
+    }
+
+    /* Custom Official Driver Number Colors */
+    .n-23 { color: #ffffff; text-shadow: 2px 2px 0 #e60012, -1px -1px 0 #000; }
+    .n-54 { color: #99cc00; text-shadow: 2px 2px 0 #000, -1px -1px 0 #fff; }
+    .n-2  { color: #ffeb3b; text-shadow: 2px 2px 0 #000, -1px -1px 0 #e60012; }
+    .n-5  { color: #fff200; text-shadow: 2px 2px 0 #0051ba, -1px -1px 0 #000; }
+    .n-88 { color: #00e5ff; text-shadow: 2px 2px 0 #000; }
+    .n-71 { color: #ff6600; text-shadow: 2px 2px 0 #000; }
+    .n-12 { color: #ffeb3b; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000; }
+    .n-17 { color: #e60012; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #000; }
+    .n-60 { color: #ffffff; text-shadow: 2px 2px 0 #e60012; }
+    .n-45 { color: #ffffff; text-shadow: 2px 2px 0 #e60012, -1px -1px 0 #000; }
+    .n-6  { color: #0051ba; text-shadow: 2px 2px 0 #fff; }
+    .n-4  { color: #e60012; text-shadow: 2px 2px 0 #000; }
+    .n-9  { color: #ffeb3b; text-shadow: 2px 2px 0 #003399, -1px -1px 0 #000; }
+    .n-77 { color: #ff6600; text-shadow: 2px 2px 0 #fff; }
+    .n-67 { color: #ffffff; text-shadow: 2px 2px 0 #e60012; }
+    .n-11 { color: #ff6600; text-shadow: 2px 2px 0 #4b0082, -1px -1px 0 #000; }
+    .n-48 { color: #e20074; text-shadow: 2px 2px 0 #00d2ff; }
+    .n-43 { color: #00aef0; text-shadow: 2px 2px 0 #ffeb3b; }
+    .n-24 { color: #ffcc00; text-shadow: 2px 2px 0 #e60012, -1px -1px 0 #000; }
+    .n-1  { color: #ffffff; text-shadow: 2px 2px 0 #e60012; }
+    .n-7  { color: #00aef0; text-shadow: 2px 2px 0 #000; }
+    .n-19 { color: #ff6600; text-shadow: 2px 2px 0 #000; }
+    .n-3  { color: #ffffff; text-shadow: 3px 3px 0 #cc0000, -1px -1px 0 #000; }
+    .n-38 { color: #ffeb3b; text-shadow: 2px 2px 0 #e60012; }
+    .n-22 { color: #ffcc00; text-shadow: 2px 2px 0 #cc0000, -1px -1px 0 #000; }
+    .n-97 { color: #ffffff; text-shadow: 2px 2px 0 #0051ba; }
+    .n-34 { color: #ffeb3b; text-shadow: 2px 2px 0 #000; }
+    .n-20 { color: #e60000; text-shadow: 2px 2px 0 #ffffff; }
+    .n-47 { color: #ffcc00; text-shadow: 2px 2px 0 #0044cc; }
+    .n-21 { color: #cc0000; text-shadow: 2px 2px 0 #ffcc00; }
+
+    /* HUGE HIGH-VISIBILITY DRIVER NAMES */
+    .name {
+      color: #ffffff;
+      font-size: min(4.5vh, 2.2vw);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      text-shadow: 2px 2px 4px #000, -1px -1px 2px #000;
+      white-space: nowrap;
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Tailored tight scaling for 8+ character driver names to prevent clipping */
+    .name-long {
+      font-size: min(3.8vh, 1.85vw);
+      letter-spacing: -0.04em;
+    }
+
+    /* ACCESSIBILITY: RESPECT PREFERS-REDUCED-MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      body::after,
+      .broadcast-scanline,
+      .nascar-bar-logo::after,
+      .animated-flag,
+      .card::before {
+        animation: none !important;
+      }
+      .card::before {
+        background: #ffb703;
+      }
+    }
+
+    /* Responsive Mobile Fallback */
+    @media (max-aspect-ratio: 1/1) {
+      body {
+        overflow: auto;
+        height: auto;
+      }
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 1vh;
+      }
+      .header-left, .header-right {
+        width: 100%;
+        justify-content: center;
+      }
+      .party-title { text-align: center; }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        height: auto;
+      }
+      .card-header h2 { font-size: 24px; }
+      .name { font-size: 22px; }
+      .name-long { font-size: 18px; }
+      .num { font-size: 28px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="page">
+  <!-- Broadcast-style subtle sweep line -->
+  <div class="broadcast-scanline"></div>
 
-  <div class="topbar">
-    <div class="logo-slot" id="logo-nascar">
-      <div class="logo-fallback">NASCAR<br>logo</div>
+  <header>
+    <!-- Bulletproof TV NASCAR Logo Bar -->
+    <div class="header-left">
+      <div class="nascar-bar-logo">
+        <div class="bar bar-red"></div>
+        <div class="bar bar-yellow"></div>
+        <div class="bar bar-blue"></div>
+        <div class="bar bar-black">
+          <span>NASCAR</span>
+        </div>
+      </div>
     </div>
 
-    <h1>7<span>th</span> Annual Race Party</h1>
-
-    <div class="logo-slot" id="logo-event">
-      <div class="logo-fallback">Coke Zero Sugar 400<br>logo</div>
+    <!-- Title with gentle flags -->
+    <div class="header-right">
+      <h1 class="party-title">
+        <span class="animated-flag">🏁</span>
+        7TH ANNUAL RACE PARTY
+        <span class="animated-flag right">🏁</span>
+      </h1>
     </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- Pam -->
+    <div class="card">
+      <div class="card-header"><h2>PAM <span class="flag-info">🏁 (x4)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-23">#23</div>
+          <div class="name">WALLACE</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-54">#54</div>
+          <div class="name">GIBBS</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-2">#2</div>
+          <div class="name">CINDRIC</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ron -->
+    <div class="card">
+      <div class="card-header"><h2>RON <span class="flag-info">🏁 (x4)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-5">#5</div>
+          <div class="name">LARSON</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-88">#88</div>
+          <div class="name">ZILISCH</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-71">#71</div>
+          <div class="name name-long">MCDOWELL</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scott -->
+    <div class="card">
+      <div class="card-header"><h2>SCOTT <span class="flag-info">🏁 (x4)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-12">#12</div>
+          <div class="name">BLANEY</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-17">#17</div>
+          <div class="name name-long">BUESCHER</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-60">#60</div>
+          <div class="name">PREECE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nick -->
+    <div class="card">
+      <div class="card-header"><h2>NICK <span class="flag-info">🏁 (x4)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-45">#45</div>
+          <div class="name">REDDICK</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-6">#6</div>
+          <div class="name name-long">KESELOWSKI</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-4">#4</div>
+          <div class="name">GRAGSON</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zach -->
+    <div class="card">
+      <div class="card-header"><h2>ZACH <span class="flag-info">🏁 (x3)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-9">#9</div>
+          <div class="name">ELLIOTT</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-77">#77</div>
+          <div class="name">HOCEVAR</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-67">#67</div>
+          <div class="name">HEIM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ace -->
+    <div class="card">
+      <div class="card-header"><h2>ACE <span class="flag-info">🏁 (x2)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-11">#11</div>
+          <div class="name">HAMLIN</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-48">#48</div>
+          <div class="name">BOWMAN</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-43">#43</div>
+          <div class="name">JONES</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nicole -->
+    <div class="card">
+      <div class="card-header"><h2>NICOLE <span class="flag-info">🏁 (x2)</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-24">#24</div>
+          <div class="name">BYRON</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-1">#1</div>
+          <div class="name name-long">CHASTAIN</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-7">#7</div>
+          <div class="name">SUAREZ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daniel -->
+    <div class="card">
+      <div class="card-header"><h2>DANIEL <span class="flag-info">🏁</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-19">#19</div>
+          <div class="name">BRISCOE</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-3">#3</div>
+          <div class="name">DILLON</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-38">#38</div>
+          <div class="name">SMITH</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KO3 -->
+    <div class="card">
+      <div class="card-header"><h2>KO3 <span class="flag-info">🏁</span></h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-22">#22</div>
+          <div class="name">LOGANO</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-97">#97</div>
+          <div class="name">SVG</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-34">#34</div>
+          <div class="name name-long">GILLILAND</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brenda -->
+    <div class="card">
+      <div class="card-header"><h2>BRENDA</h2></div>
+      <div class="card-body">
+        <div class="driver-row">
+          <div class="num n-20">#20</div>
+          <div class="name">BELL</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-47">#47</div>
+          <div class="name name-long">STENHOUSE</div>
+        </div>
+        <div class="driver-row">
+          <div class="num n-21">#21</div>
+          <div class="name">BERRY</div>
+        </div>
+      </div>
+    </div>
+
   </div>
-
-  <div class="checker-strip"></div>
-
-  <main id="board"></main>
-
-</div>
-
-<script>
-// ---- DATA -------------------------------------------------------
-// short = last-name label shown on the board (Shane van Gisbergen -> SVG)
-const pools = [
-  { owner:"Pam", flags:4, drivers:[
-    {num:23, short:"Wallace", mfg:"toyota"},
-    {num:54, short:"Gibbs", mfg:"toyota"},
-    {num:2,  short:"Cindric", mfg:"ford"},
-  ]},
-  { owner:"Ron", flags:4, drivers:[
-    {num:5,  short:"Larson", mfg:"chevy"},
-    {num:88, short:"Zilisch", mfg:"chevy"},
-    {num:71, short:"McDowell", mfg:"chevy"},
-  ]},
-  { owner:"Scott", flags:4, drivers:[
-    {num:12, short:"Blaney", mfg:"ford"},
-    {num:17, short:"Buescher", mfg:"ford"},
-    {num:60, short:"Preece", mfg:"ford"},
-  ]},
-  { owner:"Nick", flags:4, drivers:[
-    {num:45, short:"Reddick", mfg:"toyota"},
-    {num:6,  short:"Keselowski", mfg:"ford"},
-    {num:4,  short:"Gragson", mfg:"ford"},
-  ]},
-  { owner:"Zach", flags:3, drivers:[
-    {num:9,  short:"Elliott", mfg:"chevy"},
-    {num:77, short:"Hocevar", mfg:"chevy"},
-    {num:67, short:"Heim", mfg:"toyota"},
-  ]},
-  { owner:"Ace", flags:2, drivers:[
-    {num:11, short:"Hamlin", mfg:"toyota"},
-    {num:48, short:"Bowman", mfg:"chevy"},
-    {num:43, short:"Jones", mfg:"toyota"},
-  ]},
-  { owner:"Nicole", flags:2, drivers:[
-    {num:24, short:"Byron", mfg:"chevy"},
-    {num:1,  short:"Chastain", mfg:"chevy"},
-    {num:7,  short:"Suárez", mfg:"chevy"},
-  ]},
-  { owner:"Daniel", flags:1, drivers:[
-    {num:19, short:"Briscoe", mfg:"toyota"},
-    {num:3,  short:"Dillon", mfg:"chevy"},
-    {num:38, short:"Smith", mfg:"ford"},
-  ]},
-  { owner:"KO3", flags:1, drivers:[
-    {num:22, short:"Logano", mfg:"ford"},
-    {num:97, short:"SVG", mfg:"chevy"},
-    {num:34, short:"Gilliland", mfg:"ford"},
-  ]},
-  { owner:"Brenda", flags:0, drivers:[
-    {num:20, short:"Bell", mfg:"toyota"},
-    {num:47, short:"Stenhouse", mfg:"chevy"},
-    {num:21, short:"Berry", mfg:"ford"},
-  ]},
-];
-
-const mfgColor = { chevy:"var(--chevy)", ford:"var(--ford)", toyota:"var(--toyota)" };
-
-function flagIconHTML(){
-  return `<span class="flag-icon"></span>`;
-}
-
-function render(){
-  const board = document.getElementById("board");
-  board.innerHTML = pools.map(pool => `
-    <section class="pool">
-      <div class="pool-head">
-        <div class="pool-name">${pool.owner}</div>
-        ${pool.flags > 0 ? `<div class="flag-badge">${flagIconHTML()}&times;${pool.flags}</div>` : ""}
-      </div>
-      <div class="drivers">
-        ${pool.drivers.map(d => `
-          <div class="driver">
-            <div class="roundel" style="--num-color:${mfgColor[d.mfg]}">${d.num}</div>
-            <div class="driver-name">${d.short}</div>
-          </div>
-        `).join("")}
-      </div>
-    </section>
-  `).join("");
-}
-
-render();
-
-// ---- LOGO LOADING -------------------------------------------------
-// Drop your own image files alongside index.html (e.g. in a /logos folder)
-// and update the paths below. If a file isn't found, the text fallback
-// already in the HTML stays visible automatically.
-function tryLogo(slotId, path){
-  const slot = document.getElementById(slotId);
-  const img = new Image();
-  img.onload = () => { slot.innerHTML = ""; slot.appendChild(img); };
-  img.onerror = () => {}; // keep fallback text
-  img.src = path;
-}
-tryLogo("logo-nascar", "logos/nascar-logo.png");
-tryLogo("logo-event", "logos/coke-zero-sugar-400-logo.png");
-</script>
 
 </body>
 </html>
